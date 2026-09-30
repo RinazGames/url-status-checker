@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Status Checker Dashboard</title>
+    <!-- Внешние библиотеки: Bootstrap 5 CSS, Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Статусы для сайтов -->
+    <style>
+        /* Сайт работает */
+        .status-up {
+            color: #198754;
+            font-weight: bold;
+        }
+        /* Сайт недоступен */
+        .status-down {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        /* Сайт не проверялся */
+        .status-unknown {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Шапка дашборда -->
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="bi bi-activity"></i> URL Status Checker</h1>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSiteModal">
+                <i class="bi bi-plus-lg"></i> Добавить сайт
+            </button>
+        </div>
+
+        <!-- Таблица сайтов -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="sitesTable">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Название</th>
+                                <th>URL</th>
+                                <th>Категория</th>
+                                <th>Статус</th>
+                                <th>Посл. проверка</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sitesTableBody">
+                            <!-- Данные загружаются через JS -->
+                            <tr><td colspan="6" class="text-center">Загрузка...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: Добавить сайт -->
+    <div class="modal fade" id="addSiteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Добавить новый сайт</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSiteForm">
+                        <div class="mb-3">
+                            <label class="form-label">Название</label>
+                            <input type="text" class="form-control" id="siteName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">URL (например, https://google.com)</label>
+                            <input type="url" class="form-control" id="siteUrl" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Категория</label>
+                            <input type="text" class="form-control" id="siteCategory" placeholder="Поиск, Соцсети и т.д.">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Интервал проверки (мин)</label>
+                            <input type="number" class="form-control" id="siteInterval" value="5" min="1" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно: График истории -->
+    <div class="modal fade" id="historyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="historyModalTitle">История проверок</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <canvas id="historyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключение скриптов: Bootstrap, Chart.js, локальный app.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

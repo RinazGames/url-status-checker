@@ -45,3 +45,6 @@ artifacts/
 # OS Files
 .DS_Store
 Thumbs.db
+
+# User data Files
+Data/
